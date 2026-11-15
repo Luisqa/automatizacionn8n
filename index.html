@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NodePulse | Plataforma de Automatización de Flujos y Agentes IA de Código Abierto</title>
+  <meta name="description" content="Automatiza flujos de trabajo complejos, conecta APIs, bases de datos y modelos de IA en tu propia infraestructura o en la nube. La alternativa de código abierto a Zapier y Make.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff5f2',
+              100: '#ffe8e1',
+              200: '#ffd0c3',
+              300: '#ffab97',
+              400: '#ff7754',
+              500: '#ea4a1e', // Vibrant n8n/zapier-like high-energy orange-coral
+              600: '#d7350d',
+              700: '#b42607',
+              800: '#92210a',
+              900: '#79200e',
+              950: '#420b03',
+            },
+            dark: {
+              bg: '#090B0E',
+              surface: '#0F1318',
+              card: '#151A21',
+              border: '#222B36',
+              borderLight: '#2E3947',
+            },
+            ai: {
+              violet: '#8B5CF6',
+              cyan: '#06B6D4',
+              emerald: '#10B981',
+              amber: '#F59E0B'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'glow-line': 'glowLine 3s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-8px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-dark-bg text-slate-200 font-sans selection:bg-brand-500 selection:text-white antialiased overflow-x-hidden">
+
+  <!-- Subtle Ambient Glow Backgrounds -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="ambient-glow -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-brand-500/15 rounded-full blur-[140px]"></div>
+    <div class="ambient-glow top-[35%] -left-48 w-[600px] h-[600px] bg-ai-violet/10 rounded-full blur-[160px]"></div>
+    <div class="ambient-glow top-[65%] -right-48 w-[650px] h-[650px] bg-ai-cyan/10 rounded-full blur-[160px]"></div>
+    <div class="grid-pattern absolute inset-0 opacity-40"></div>
+  </div>
+
+  <!-- NAVIGATION BAR -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-dark-bg/80 border-b border-dark-border/80 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 via-brand-600 to-ai-violet p-[1px] shadow-lg shadow-brand-500/20 group-hover:shadow-brand-500/40 transition-all duration-300">
+          <div class="w-full h-full bg-dark-surface rounded-[11px] flex items-center justify-center">
+            <svg class="w-5 h-5 text-brand-400 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2">
+            <span class="text-xl font-extrabold tracking-tight text-white">Node<span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-500">Pulse</span></span>
+            <span class="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20">v2.5</span>
+          </div>
+          <span class="text-[11px] text-slate-400 font-medium -mt-1">Orquestación & IA</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#features" class="hover:text-white transition-colors">Características</a>
+        <a href="#demo" class="hover:text-white transition-colors">Simulador</a>
+        <a href="#integrations" class="hover:text-white transition-colors">Integraciones</a>
+        <a href="#self-hosted" class="hover:text-white transition-colors">Self-Hosted</a>
+        <a href="#pricing" class="hover:text-white transition-colors">Precios</a>
+        <a href="#docs" class="hover:text-white transition-colors">Documentación</a>
+      </nav>
+
+      <!-- Right CTAs -->
+      <div class="hidden sm:flex items-center gap-4">
+        <!-- GitHub Star Badge -->
+        <a href="https://github.com" target="_blank" rel="noreferrer" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-dark-card border border-dark-border hover:border-dark-borderLight text-xs font-medium text-slate-300 hover:text-white transition-all shadow-sm">
+          <svg class="w-4 h-4 text-slate-300" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
+          </svg>
+          <span>Star</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-slate-600"></span>
+          <span class="font-mono text-brand-400 font-semibold">34.8k</span>
+        </a>
+
+        <!-- Sign In & Cloud Button -->
+        <a href="#login" class="text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 transition-colors">Iniciar sesión</a>
+        <a href="#get-started" class="btn-primary text-xs font-semibold px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 transition-all flex items-center gap-1.5 transform hover:-translate-y-0.5">
+          <span>Probar en Cloud</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobileMenuBtn" aria-label="Abrir menú" class="md:hidden p-2 rounded-lg bg-dark-card border border-dark-border text-slate-300 hover:text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path id="menuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden bg-dark-surface border-b border-dark-border px-6 py-6 space-y-4">
+      <a href="#features" class="block text-slate-300 hover:text-white font-medium mobile-link">Características</a>
+      <a href="#demo" class="block text-slate-300 hover:text-white font-medium mobile-link">Simulador</a>
+      <a href="#integrations" class="block text-slate-300 hover:text-white font-medium mobile-link">Integraciones</a>
+      <a href="#self-hosted" class="block text-slate-300 hover:text-white font-medium mobile-link">Self-Hosted</a>
+      <a href="#pricing" class="block text-slate-300 hover:text-white font-medium mobile-link">Precios</a>
+      <div class="pt-4 border-t border-dark-border flex flex-col gap-3">
+        <a href="#login" class="text-center py-2.5 rounded-lg border border-dark-border text-sm text-slate-300 font-medium">Iniciar sesión</a>
+        <a href="#get-started" class="text-center py-2.5 rounded-lg bg-brand-500 text-sm text-white font-medium shadow-md shadow-brand-500/30">Probar en Cloud Gratis</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-12 pb-24 md:pt-20 md:pb-32 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Top Pill Banner -->
+      <div class="flex justify-center mb-8">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-dark-card/90 border border-brand-500/30 text-xs text-slate-300 shadow-xl shadow-brand-500/5 backdrop-blur-md hover:border-brand-500/60 transition-all cursor-pointer group">
+          <span class="flex h-2 w-2 relative">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+          </span>
+          <span class="font-medium text-slate-200">Nuevo en v2.5:</span>
+          <span class="text-brand-400 font-semibold group-hover:underline">Orquestación de Agentes de IA autónomos con Memoria Vectorial</span>
+          <svg class="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </div>
+      </div>
+
+      <!-- Main Headline -->
+      <div class="text-center max-w-4xl mx-auto">
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-6">
+          Automatización sin límites.
+          <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-500 to-amber-300">
+            Libre, visual y potenciada por IA.
+          </span>
+        </h1>
+        
+        <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+          Conecta cualquier API, base de datos y modelo de lenguaje sin restricciones de código cerrado. Ejecútalo en tu propio servidor o en la nube con privacidad absoluta de tus datos.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+          <a href="#get-started" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-400 hover:to-brand-500 text-white font-semibold text-base shadow-xl shadow-brand-500/30 hover:shadow-brand-500/50 transition-all flex items-center justify-center gap-2 group">
+            <span>Iniciar Gratis en Cloud</span>
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </a>
+
+          <!-- Docker 1-click Quick Launch Copy -->
+          <div class="w-full sm:w-auto flex items-center bg-dark-card border border-dark-border hover:border-dark-borderLight rounded-xl px-4 py-3 shadow-inner group">
+            <span class="text-xs font-mono text-slate-500 mr-2">$</span>
+            <code id="dockerCommand" class="text-xs sm:text-sm font-mono text-slate-300 select-all">docker run -p 5678:5678 nodepulse/nodepulse</code>
+            <button id="copyDockerBtn" title="Copiar comando Docker" class="ml-3 p-1.5 rounded-lg bg-dark-surface hover:bg-slate-800 text-slate-400 hover:text-white transition-all">
+              <svg id="copyIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+              <svg id="copiedIcon" class="w-4 h-4 text-emerald-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Trust Mini Badges -->
+        <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
+          <div class="flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span>Fair-Code & Open Source</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span>Ejecuciones ilimitadas en Self-Hosted</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span>Sin tarjeta de crédito requerida</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- INTERACTIVE WORKFLOW CANVAS (HERO SHOWCASE) -->
+      <div id="demo" class="mt-14 relative mx-auto max-w-6xl">
+        
+        <!-- Canvas Frame Glow Container -->
+        <div class="relative rounded-2xl p-[1px] bg-gradient-to-b from-brand-500/40 via-dark-border to-dark-border shadow-2xl shadow-brand-500/10">
+          
+          <div class="bg-dark-surface rounded-2xl overflow-hidden border border-dark-border">
+            
+            <!-- Window Title Bar -->
+            <div class="h-12 bg-dark-card/90 border-b border-dark-border px-4 flex items-center justify-between">
+              
+              <!-- Window Dots & Title -->
+              <div class="flex items-center gap-3">
+                <div class="flex items-center gap-1.5">
+                  <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+                  <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                  <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                </div>
+                <div class="h-4 w-[1px] bg-dark-border mx-1"></div>
+                <span class="text-xs font-mono text-slate-300 font-medium flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  flujo_atencion_ia_leads.pulse
+                </span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Activo</span>
+              </div>
+
+              <!-- Interactive Simulator Toolbar -->
+              <div class="flex items-center gap-3">
+                <div id="executionStatusBadge" class="hidden sm:flex items-center gap-1.5 text-xs font-mono text-slate-400 bg-dark-surface px-2.5 py-1 rounded-md border border-dark-border">
+                  <span id="statusPulse" class="w-2 h-2 rounded-full bg-slate-500"></span>
+                  <span id="statusText">Estado: Esperando trigger</span>
+                </div>
+
+                <button id="runWorkflowBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-brand-500 hover:bg-brand-400 text-white text-xs font-semibold shadow-md shadow-brand-500/30 transition-all active:scale-95">
+                  <svg id="playIcon" class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  <span id="playButtonText">Ejecutar Flujo de Prueba</span>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Canvas Workspace Area -->
+            <div class="relative bg-dark-bg p-6 sm:p-10 min-h-[480px] flex items-center justify-center overflow-x-auto select-none" id="workflowCanvas">
+              
+              <!-- Subtle Background Grid dots -->
+              <div class="absolute inset-0 bg-canvas-grid opacity-30 pointer-events-none"></div>
+
+              <!-- SVG Connection Curves Layer -->
+              <svg id="connectionSvg" class="absolute inset-0 w-full h-full pointer-events-none z-10" xmlns="http://www.w3.org/2000/svg">
+                <!-- Path 1: Trigger -> AI Agent -->
+                <path id="wire-1" d="" class="flow-wire" stroke="#334155" stroke-width="2.5" fill="none" stroke-dasharray="6 6"/>
+                <path id="wire-1-pulse" d="" class="flow-wire-pulse" stroke="#ea4a1e" stroke-width="3" fill="none" opacity="0"/>
+                
+                <!-- Path 2: AI Agent -> Router (Condition) -->
+                <path id="wire-2" d="" class="flow-wire" stroke="#334155" stroke-width="2.5" fill="none" stroke-dasharray="6 6"/>
+                <path id="wire-2-pulse" d="" class="flow-wire-pulse" stroke="#8B5CF6" stroke-width="3" fill="none" opacity="0"/>
+
+                <!-- Path 3: Router -> PostgreSQL (Path True) -->
+                <path id="wire-3" d="" class="flow-wire" stroke="#334155" stroke-width="2.5" fill="none" stroke-dasharray="6 6"/>
+                <path id="wire-3-pulse" d="" class="flow-wire-pulse" stroke="#06B6D4" stroke-width="3" fill="none" opacity="0"/>
+
+                <!-- Path 4: Router -> Slack Notification (Path VIP) -->
+                <path id="wire-4" d="" class="flow-wire" stroke="#334155" stroke-width="2.5" fill="none" stroke-dasharray="6 6"/>
+                <path id="wire-4-pulse" d="" class="flow-wire-pulse" stroke="#10B981" stroke-width="3" fill="none" opacity="0"/>
+              </svg>
+
+              <!-- NODES GRID -->
+              <div class="relative z-20 w-full max-w-5xl flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 py-6">
+
+                <!-- NODE 1: Webhook Trigger -->
+                <div id="node-1" class="workflow-node group w-64 bg-dark-card border-2 border-dark-border hover:border-brand-500/80 rounded-xl p-4 shadow-xl transition-all duration-300 cursor-pointer" data-node="webhook">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-9 h-9 rounded-lg bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400">
+                        <!-- Webhook Lightning Icon -->
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                      </div>
+                      <div>
+                        <h4 class="text-xs font-bold text-white tracking-wide">Webhook Entrada</h4>
+                        <span class="text-[10px] text-brand-400 font-mono">POST /api/leads</span>
+                      </div>
+                    </div>
+                    <span id="badge-node-1" class="node-badge text-[10px] px-1.5 py-0.5 rounded bg-dark-surface border border-dark-border text-slate-400 font-mono">Trigger</span>
+                  </div>
+                  <p class="text-[11px] text-slate-400 line-clamp-2">Recibe JSON de formulario con nombre, empresa y tamaño de equipo.</p>
+                  <div class="mt-3 pt-2 border-t border-dark-border/60 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                    <span>Salida: Payload JSON</span>
+                    <span class="text-brand-400 group-hover:underline">Inspeccionar →</span>
+                  </div>
+                </div>
+
+                <!-- NODE 2: AI Agent & LLM -->
+                <div id="node-2" class="workflow-node group w-64 bg-dark-card border-2 border-dark-border hover:border-ai-violet/80 rounded-xl p-4 shadow-xl transition-all duration-300 cursor-pointer" data-node="ai">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2.5">
+                      <div class="w-9 h-9 rounded-lg bg-ai-violet/10 border border-ai-violet/30 flex items-center justify-center text-ai-violet">
+                        <!-- AI Sparkles Icon -->
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.286L13 21l-2.286-6.857L5 12l5.714-2.286L13 3z"></path></svg>
+                      </div>
+                      <div>
+                        <h4 class="text-xs font-bold text-white tracking-wide">Agente de IA</h4>
+                        <span class="text-[10px] text-ai-violet font-mono">Gemini 1.5 Pro</span>
+                      </div>
+                    </div>
+                    <span id="badge-node-2" class="node-badge text-[10px] px-1.5 py-0.5 rounded bg-dark-surface border border-dark-border text-slate-400 font-mono">IA Core</span>
+                  </div>
+                  <p class="text-[11px] text-slate-400 line-clamp-2">Clasifica intención, puntúa potencial (Score) y resume la necesidad del cliente.</p>
+                  <div class="mt-3 pt-2 border-t border-dark-border/60 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                    <span>Temp: 0.2 | RAG</span>
+                    <span class="text-ai-violet group-hover:underline">Prompt →</span>
+                  </div>
+                </div>
+
+                <!-- SPLIT RIGHT NODES (Postgres & Slack) -->
+                <div class="flex flex-col gap-5">
+                  
+                  <!-- NODE 3: PostgreSQL Database -->
+                  <div id="node-3" class="workflow-node group w-64 bg-dark-card border-2 border-dark-border hover:border-ai-cyan/80 rounded-xl p-4 shadow-xl transition-all duration-300 cursor-pointer" data-node="db">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-ai-cyan/10 border border-ai-cyan/30 flex items-center justify-center text-ai-cyan">
+                          <!-- Database Icon -->
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7M4 7c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3M4 7c0-2 1.5-3 3.5-3h9c2 0 3.5 1 3.5 3m-16 5c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3"></path></svg>
+                        </div>
+                        <div>
+                          <h4 class="text-xs font-bold text-white tracking-wide">PostgreSQL</h4>
+                          <span class="text-[10px] text-ai-cyan font-mono">INSERT leads</span>
+                        </div>
+                      </div>
+                      <span id="badge-node-3" class="node-badge text-[10px] px-1.5 py-0.5 rounded bg-dark-surface border border-dark-border text-slate-400 font-mono">BD</span>
+                    </div>
+                    <p class="text-[10px] text-slate-400">Almacena lead enriquecido con el resumen IA.</p>
+                  </div>
+
+                  <!-- NODE 4: Slack Priority Channel -->
+                  <div id="node-4" class="workflow-node group w-64 bg-dark-card border-2 border-dark-border hover:border-emerald-500/80 rounded-xl p-4 shadow-xl transition-all duration-300 cursor-pointer" data-node="slack">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                          <!-- Slack/Chat Icon -->
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                        </div>
+                        <div>
+                          <h4 class="text-xs font-bold text-white tracking-wide">Slack Enterprise</h4>
+                          <span class="text-[10px] text-emerald-400 font-mono">#leads-vip</span>
+                        </div>
+                      </div>
+                      <span id="badge-node-4" class="node-badge text-[10px] px-1.5 py-0.5 rounded bg-dark-surface border border-dark-border text-slate-400 font-mono">Notif</span>
+                    </div>
+                    <p class="text-[10px] text-slate-400">Dispara alerta con botones interactivos para el equipo comercial.</p>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Execution Logs Drawer & Data Inspector -->
+            <div id="nodeInspector" class="border-t border-dark-border bg-dark-card/95 p-4 transition-all duration-300">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2 text-xs font-mono">
+                  <span class="text-slate-400">Inspección de datos del nodo:</span>
+                  <span id="inspectorNodeName" class="font-bold text-brand-400">Webhook Entrada (Haz clic en un nodo para ver su payload)</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span id="inspectorExecutionTime" class="text-[11px] font-mono text-slate-500">Tiempo: -</span>
+                  <button id="closeInspectorBtn" class="text-slate-500 hover:text-slate-300 text-xs">Ocultar</button>
+                </div>
+              </div>
+
+              <!-- JSON Viewer -->
+              <pre id="inspectorJson" class="bg-dark-bg p-3 rounded-lg font-mono text-xs text-slate-300 overflow-x-auto max-h-36 border border-dark-border/60 scrollbar-thin">{
+  "trigger": "webhook_post",
+  "lead": {
+    "empresa": "TechGlobal S.L.",
+    "email": "carlos.m@techglobal.com",
+    "empleados": 180,
+    "mensaje": "Buscamos automatizar flujos internos reemplazando Make y Zapier por privacidad GDPR."
+  }
+}</pre>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Floating Caption Under Canvas -->
+        <div class="mt-4 flex flex-wrap items-center justify-between text-xs text-slate-500 px-2">
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-brand-500"></span>
+            <span>Haz clic en cualquier nodo para ver su entrada y salida JSON en tiempo real</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span>Latencia media: <strong class="text-slate-300 font-mono">18ms</strong></span>
+            <span>Uso de memoria: <strong class="text-slate-300 font-mono">64MB</strong></span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF / METRICS BAR -->
+  <section class="py-12 border-y border-dark-border bg-dark-surface/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <p class="text-center text-xs font-bold uppercase tracking-widest text-slate-500 mb-8">
+        La infraestructura de automatización elegida por más de 65,000 desarrolladores y arquitectos de datos
+      </p>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="p-4 rounded-xl bg-dark-card/40 border border-dark-border/60">
+          <div class="text-3xl sm:text-4xl font-extrabold text-white font-mono mb-1">34.8k+</div>
+          <div class="text-xs text-slate-400 font-medium">Estrellas en GitHub</div>
+        </div>
+        <div class="p-4 rounded-xl bg-dark-card/40 border border-dark-border/60">
+          <div class="text-3xl sm:text-4xl font-extrabold text-brand-400 font-mono mb-1">50M+</div>
+          <div class="text-xs text-slate-400 font-medium">Descargas de Contenedor Docker</div>
+        </div>
+        <div class="p-4 rounded-xl bg-dark-card/40 border border-dark-border/60">
+          <div class="text-3xl sm:text-4xl font-extrabold text-ai-violet font-mono mb-1">450+</div>
+          <div class="text-xs text-slate-400 font-medium">Integraciones y Nodos Nativos</div>
+        </div>
+        <div class="p-4 rounded-xl bg-dark-card/40 border border-dark-border/60">
+          <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 font-mono mb-1">99.99%</div>
+          <div class="text-xs text-slate-400 font-medium">Fiabilidad de Ejecución</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION: WHY NODEPULSE -->
+  <section id="features" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-20">
+        <span class="text-xs font-bold uppercase tracking-wider text-brand-400 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">
+          Arquitectura de Próxima Generación
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mt-4 mb-4">
+          Diseñado para desarrolladores. Intuitivo para todo el equipo.
+        </h2>
+        <p class="text-slate-400 text-base sm:text-lg">
+          Olvídate de las restricciones artificiales por tareas de Zapier o la complejidad excesiva de frameworks de código puro. Lo mejor de ambos mundos.
+        </p>
+      </div>
+
+      <!-- Features Grid (3 Columns) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Card 1: Visual + Code Freedom -->
+        <div class="bg-dark-card/80 border border-dark-border hover:border-brand-500/50 rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 group">
+          <div class="w-12 h-12 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 mb-6 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">JavaScript & Python Nativo</h3>
+          <p class="text-sm text-slate-400 leading-relaxed mb-6">
+            Arrastra nodos para el 90% del flujo, pero cuando necesites lógica a medida, escribe funciones en JS o Python sin servidores externos ni webhooks intermedios.
+          </p>
+          <ul class="space-y-2 text-xs text-slate-300">
+            <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Soporte para paquetes npm y PyPI</li>
+            <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Transformación de datos sin latencia</li>
+            <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Autocompletado y tipado TypeScript</li>
+          </ul>
+        </div>
+
+        <!-- Card 2: AI Agents & RAG -->
+        <div class="bg-dark-card/80 border border-dark-border hover:border-ai-violet/50 rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 group">
+          <div class="w-12 h-12 rounded-xl bg-ai-violet/10 border border-ai-violet/20 flex items-center justify-center text-ai-violet mb-6 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Agentes de IA y Embeddings</h3>
+          <p class="text-sm text-slate-400 leading-relaxed mb-6">
+            Conecta OpenAI, Anthropic, Gemini o modelos locales vía Ollama. Orquesta agentes autónomos con memoria vectorial y llamadas a herramientas (Tool Calling).
+          </p>
+          <ul class="space-y-2 text-xs text-slate-300">
+            <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-ai-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Conectores a Pinecone, Qdrant y pgvector</li>
+            <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-ai-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Agentes con memoria conversacional</li>
+            <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-ai-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Ejecución en local 100% privada</li>
+          </ul>
+        </div>
+
+        <!-- Card 3: Privacy & Zero Lock-in -->
+        <div class="bg-dark-card/80 border border-dark-border hover:border-emerald-500/50 rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 group">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Privacidad y Cumplimiento GDPR</h3>
+          <p class="text-sm text-slate-400 leading-relaxed mb-6">
+            Tus datos nunca viajan por servidores desconocidos si no quieres. Aloja NodePulse en tu VPC, Kubernetes o servidor físico con cifrado en reposo.
+          </p>
+          <ul class="space-y-2 text-xs text-slate-300">
+            <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Cero retención forzada de datos</li>
+            <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Cumplimiento estricto HIPAA y GDPR</li>
+            <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Exporta flujos en JSON transparente</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTEGRATIONS ECOSYSTEM SECTION (INTERACTIVE FILTER) -->
+  <section id="integrations" class="py-24 bg-dark-surface/40 border-t border-dark-border relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-ai-cyan bg-ai-cyan/10 px-3 py-1 rounded-full border border-ai-cyan/20">
+            Ecosistema de Conectores
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-4">
+            Más de 450 integraciones listas para conectar
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base mt-2 max-w-xl">
+            Desde las APIs más populares de SaaS hasta bases de datos SQL/NoSQL y modelos de IA de última generación.
+          </p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="mt-6 md:mt-0 relative w-full md:w-80">
+          <input type="text" id="integrationSearch" placeholder="Buscar integración (ej: PostgreSQL, OpenAI, Stripe...)" class="w-full bg-dark-card border border-dark-border focus:border-brand-500 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none transition-all pl-9">
+          <svg class="w-4 h-4 text-slate-500 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+      </div>
+
+      <!-- Categories Filter Tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none" id="categoryTabs">
+        <button class="cat-tab active px-4 py-2 rounded-xl text-xs font-medium bg-brand-500 text-white transition-all shadow-md" data-category="all">Todos (450+)</button>
+        <button class="cat-tab px-4 py-2 rounded-xl text-xs font-medium bg-dark-card text-slate-400 hover:text-white border border-dark-border transition-all" data-category="ai">IA & LLMs</button>
+        <button class="cat-tab px-4 py-2 rounded-xl text-xs font-medium bg-dark-card text-slate-400 hover:text-white border border-dark-border transition-all" data-category="database">Bases de Datos</button>
+        <button class="cat-tab px-4 py-2 rounded-xl text-xs font-medium bg-dark-card text-slate-400 hover:text-white border border-dark-border transition-all" data-category="messaging">Mensajería & CRM</button>
+        <button class="cat-tab px-4 py-2 rounded-xl text-xs font-medium bg-dark-card text-slate-400 hover:text-white border border-dark-border transition-all" data-category="dev">DevOps & Cloud</button>
+      </div>
+
+      <!-- Integrations Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" id="integrationsGrid">
+        <!-- Rendered dynamically by app.js with rich icons -->
+      </div>
+
+      <div class="mt-12 text-center">
+        <p class="text-xs text-slate-400">¿No encuentras tu servicio interno o API privada? 
+          <a href="#docs" class="text-brand-400 font-semibold hover:underline">Crea un nodo personalizado en TypeScript en menos de 5 minutos →</a>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE: NODEPULSE VS OTHERS -->
+  <section class="py-24 border-t border-dark-border relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          ¿Cómo se compara NodePulse?
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          Compara la libertad técnica, el coste y la soberanía de datos frente a alternativas cerradas y heredadas.
+        </p>
+      </div>
+
+      <div class="overflow-x-auto rounded-2xl border border-dark-border bg-dark-surface">
+        <table class="w-full text-left text-xs sm:text-sm">
+          <thead>
+            <tr class="border-b border-dark-border bg-dark-card/60">
+              <th class="p-4 sm:p-5 font-bold text-slate-300">Capacidad</th>
+              <th class="p-4 sm:p-5 font-extrabold text-brand-400 bg-brand-500/10 border-x border-brand-500/20 text-center">NodePulse</th>
+              <th class="p-4 sm:p-5 font-semibold text-slate-400 text-center">Zapier</th>
+              <th class="p-4 sm:p-5 font-semibold text-slate-400 text-center">Make.com</th>
+              <th class="p-4 sm:p-5 font-semibold text-slate-400 text-center">n8n</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-dark-border text-slate-300">
+            <tr>
+              <td class="p-4 sm:p-5 font-medium">Modelo de Software & Código</td>
+              <td class="p-4 sm:p-5 text-center font-bold text-white bg-brand-500/5 border-x border-brand-500/20">Fair-Code / Open Source</td>
+              <td class="p-4 sm:p-5 text-center text-slate-400">Propietario cerrado</td>
+              <td class="p-4 sm:p-5 text-center text-slate-400">Propietario cerrado</td>
+              <td class="p-4 sm:p-5 text-center text-slate-300">Fair-Code</td>
+            </tr>
+            <tr>
+              <td class="p-4 sm:p-5 font-medium">Self-Hosted Ilimitado</td>
+              <td class="p-4 sm:p-5 text-center font-bold text-emerald-400 bg-brand-500/5 border-x border-brand-500/20">✓ Gratis y sin límites</td>
+              <td class="p-4 sm:p-5 text-center text-rose-500">✕ No disponible</td>
+              <td class="p-4 sm:p-5 text-center text-rose-500">✕ No disponible</td>
+              <td class="p-4 sm:p-5 text-center text-emerald-400">✓ Comunitario</td>
+            </tr>
+            <tr>
+              <td class="p-4 sm:p-5 font-medium">Lógica de Código Propio</td>
+              <td class="p-4 sm:p-5 text-center font-bold text-white bg-brand-500/5 border-x border-brand-500/20">JavaScript + Python completo</td>
+              <td class="p-4 sm:p-5 text-center text-slate-400">Muy limitado (timeouts cortos)</td>
+              <td class="p-4 sm:p-5 text-center text-slate-400">Solo fórmulas básicas</td>
+              <td class="p-4 sm:p-5 text-center text-slate-300">JavaScript + Python</td>
+            </tr>
+            <tr>
+              <td class="p-4 sm:p-5 font-medium">Orquestación de Agentes de IA</td>
+              <td class="p-4 sm:p-5 text-center font-bold text-white bg-brand-500/5 border-x border-brand-500/20">Nativa con RAG y Tool Calling</td>
+              <td class="p-4 sm:p-5 text-center text-slate-400">Add-on con sobrecoste</td>
+              <td class="p-4 sm:p-5 text-center text-slate-400">Básica por API</td>
+              <td class="p-4 sm:p-5 text-center text-slate-300">Nativa (LangChain)</td>
+            </tr>
+            <tr>
+              <td class="p-4 sm:p-5 font-medium">Privacidad de Datos (GDPR/HIPAA)</td>
+              <td class="p-4 sm:p-5 text-center font-bold text-emerald-400 bg-brand-500/5 border-x border-brand-500/20">100% en tu servidor</td>
+              <td class="p-4 sm:p-5 text-center text-slate-400">En nube de terceros</td>
+              <td class="p-4 sm:p-5 text-center text-slate-400">En nube de terceros</td>
+              <td class="p-4 sm:p-5 text-center text-emerald-400">100% en tu servidor</td>
+            </tr>
+            <tr>
+              <td class="p-4 sm:p-5 font-medium">Depuración de ejecuciones paso a paso</td>
+              <td class="p-4 sm:p-5 text-center font-bold text-white bg-brand-500/5 border-x border-brand-500/20">Visual interactivo con reintentos</td>
+              <td class="p-4 sm:p-5 text-center text-slate-400">Registro simple</td>
+              <td class="p-4 sm:p-5 text-center text-slate-400">Burbujas numéricas</td>
+              <td class="p-4 sm:p-5 text-center text-slate-300">Visual paso a paso</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SELF-HOSTED DEPLOYMENT SECTION (CLI TABS) -->
+  <section id="self-hosted" class="py-24 bg-dark-surface/60 border-t border-dark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-6">
+          <span class="text-xs font-bold uppercase tracking-wider text-brand-400 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">
+            Libertad Total de Despliegue
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-4 mb-4">
+            Despliega en minutos en tu infraestructura preferida
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">
+            NodePulse es ligero, modular y está listo para producción. Ejecútalo como un solo contenedor Docker en un VPS de \$5/mes o escala horizontalmente con Kubernetes y colas Redis.
+          </p>
+
+          <div class="space-y-4 text-xs sm:text-sm text-slate-300">
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-md bg-brand-500/10 text-brand-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">1</div>
+              <div>
+                <strong class="text-white">Una sola imagen Docker oficial:</strong>
+                <p class="text-slate-400 text-xs">Incluye base de datos SQLite integrada para inicio inmediato o conexión a PostgreSQL para alta disponibilidad.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-md bg-brand-500/10 text-brand-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">2</div>
+              <div>
+                <strong class="text-white">Escalabilidad horizontal (Workers):</strong>
+                <p class="text-slate-400 text-xs">Separa la interfaz web de los workers de ejecución para procesar millones de webhooks concurrentes sin latencia.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 rounded-md bg-brand-500/10 text-brand-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">3</div>
+              <div>
+                <strong class="text-white">Control de versiones con Git:</strong>
+                <p class="text-slate-400 text-xs">Sincroniza tus flujos de trabajo con repositorios GitHub o GitLab para integrarlos en tus pipelines CI/CD.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal Showcase -->
+        <div class="lg:col-span-6">
+          <div class="rounded-2xl border border-dark-border bg-dark-card overflow-hidden shadow-2xl">
+            <!-- Terminal Header -->
+            <div class="h-10 bg-dark-surface border-b border-dark-border px-4 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+                <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                <span class="text-xs font-mono text-slate-400 ml-2">terminal — nodepulse deploy</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <button class="deploy-tab active text-[11px] font-mono px-2.5 py-1 rounded bg-dark-border text-white" data-tab="docker">Docker</button>
+                <button class="deploy-tab text-[11px] font-mono px-2.5 py-1 rounded text-slate-400 hover:text-white" data-tab="compose">Compose</button>
+                <button class="deploy-tab text-[11px] font-mono px-2.5 py-1 rounded text-slate-400 hover:text-white" data-tab="k8s">Kubernetes</button>
+                <button class="deploy-tab text-[11px] font-mono px-2.5 py-1 rounded text-slate-400 hover:text-white" data-tab="npm">npm</button>
+              </div>
+            </div>
+
+            <!-- Terminal Body -->
+            <div class="p-5 font-mono text-xs text-slate-300 bg-dark-bg min-h-[220px]">
+              <div id="cliOutput">
+                <!-- Content swapped by app.js -->
+                <p class="text-slate-500 mb-2"># Inicia NodePulse en segundo plano en el puerto 5678</p>
+                <p class="text-brand-400">$ docker run -d \</p>
+                <p class="text-slate-300 pl-4">--name nodepulse \</p>
+                <p class="text-slate-300 pl-4">-p 5678:5678 \</p>
+                <p class="text-slate-300 pl-4">-v nodepulse_data:/home/node/.nodepulse \</p>
+                <p class="text-slate-300 pl-4">--restart unless-stopped \</p>
+                <p class="text-slate-300 pl-4">nodepulse/nodepulse:latest</p>
+                <p class="text-emerald-400 mt-4">✔ Contenedor iniciado en http://localhost:5678</p>
+              </div>
+            </div>
+            <!-- Terminal Footer -->
+            <div class="px-5 py-3 bg-dark-surface/80 border-t border-dark-border flex items-center justify-between text-xs">
+              <span class="text-slate-400 font-mono">Tiempo de arranque: &lt; 3 seg</span>
+              <button id="copyDeployCmdBtn" class="flex items-center gap-1.5 text-brand-400 hover:text-brand-300 font-medium">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                <span>Copiar comando</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRICING SECTION -->
+  <section id="pricing" class="py-24 border-t border-dark-border relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-wider text-brand-400 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">
+          Precios Transparentes
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mt-4 mb-4">
+          Comienza gratis. Escala sin sorpresas en tu factura.
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          A diferencia de otras herramientas que te cobran por cada minúsculo paso de ejecución, con NodePulse tienes libertad total.
+        </p>
+
+        <!-- Billing Cycle Toggle -->
+        <div class="mt-8 inline-flex items-center gap-3 p-1 rounded-xl bg-dark-card border border-dark-border">
+          <button id="billingMonthly" class="px-4 py-2 rounded-lg text-xs font-semibold bg-brand-500 text-white transition-all">Facturación Mensual</button>
+          <button id="billingAnnual" class="px-4 py-2 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
+            <span>Anual</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">-20% Ahorro</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pricing Cards (3 Tiers) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- TIER 1: Self-Hosted Community -->
+        <div class="bg-dark-card border border-dark-border rounded-2xl p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-white">Community</h3>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-dark-surface text-slate-400 border border-dark-border">Self-Hosted</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-6">Ideal para desarrolladores independientes y startups que quieren control total en su hardware.</p>
+            <div class="mb-6">
+              <span class="text-4xl font-extrabold text-white font-mono">$0</span>
+              <span class="text-xs text-slate-400">/ gratis para siempre</span>
+            </div>
+            
+            <ul class="space-y-3 text-xs text-slate-300 mb-8 border-t border-dark-border pt-6">
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <strong>Ejecuciones ilimitadas</strong></li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Flujos de trabajo ilimitados</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Todos los 450+ nodos y conectores</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Nodos de IA locales (Ollama/LM Studio)</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Soporte de la comunidad en Discord</li>
+            </ul>
+          </div>
+
+          <a href="#self-hosted" class="w-full py-3 rounded-xl border border-dark-border hover:border-slate-400 text-center text-xs font-semibold text-white transition-all block">
+            Ver Guía de Instalación Docker
+          </a>
+        </div>
+
+        <!-- TIER 2: Pro Cloud (Highlighted) -->
+        <div class="relative bg-gradient-to-b from-dark-card to-dark-surface border-2 border-brand-500 rounded-2xl p-8 flex flex-col justify-between shadow-2xl shadow-brand-500/10 scale-105 z-10">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-500 text-white font-bold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
+            Más Popular
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-white">Pro Cloud</h3>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-brand-500/20 text-brand-400 border border-brand-500/30">Nube Administrada</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-6">Para equipos en crecimiento que necesitan cero mantenimiento de infraestructura y alta velocidad.</p>
+            <div class="mb-6">
+              <span id="pricePro" class="text-4xl font-extrabold text-white font-mono">$24</span>
+              <span id="periodPro" class="text-xs text-slate-400">/ mes (facturado mensual)</span>
+            </div>
+            
+            <ul class="space-y-3 text-xs text-slate-300 mb-8 border-t border-dark-border pt-6">
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <strong>50,000 ejecuciones incluidas</strong></li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Flujos concurrentes sin límite</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Servidores de ejecución en UE o EE.UU.</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Copias de seguridad automáticas diarias</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Soporte técnico prioritario por email</li>
+            </ul>
+          </div>
+
+          <a href="#get-started" class="w-full py-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-center text-xs font-semibold text-white shadow-lg shadow-brand-500/30 transition-all block">
+            Empezar Prueba Gratuita de 14 Días
+          </a>
+        </div>
+
+        <!-- TIER 3: Enterprise -->
+        <div class="bg-dark-card border border-dark-border rounded-2xl p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-white">Enterprise</h3>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-dark-surface text-slate-400 border border-dark-border">Híbrido / Cloud</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-6">Para corporaciones con requisitos estrictos de seguridad, gobernanza de datos y SLA garantizado.</p>
+            <div class="mb-6">
+              <span class="text-4xl font-extrabold text-white font-mono">A medida</span>
+              <span class="text-xs text-slate-400">/ contrato anual</span>
+            </div>
+            
+            <ul class="space-y-3 text-xs text-slate-300 mb-8 border-t border-dark-border pt-6">
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <strong>SAML / SSO (Okta, Azure AD, Google)</strong></li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Permisos granulares y Roles (RBAC)</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Logs de auditoría inmutables</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> SLA del 99.99% con arquitecto dedicado</li>
+              <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Soporte para despliegue Air-Gapped</li>
+            </ul>
+          </div>
+
+          <a href="#contact" class="w-full py-3 rounded-xl border border-dark-border hover:border-slate-400 text-center text-xs font-semibold text-white transition-all block">
+            Hablar con Ventas Enterprise
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS / DEVELOPER QUOTES -->
+  <section class="py-24 bg-dark-surface/50 border-t border-dark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-3xl font-extrabold text-white tracking-tight">Lo que opinan los ingenieros</h2>
+        <p class="text-slate-400 text-sm mt-2">Historias de equipos reales que migraron de plataformas propietarias.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="p-6 rounded-2xl bg-dark-card border border-dark-border flex flex-col justify-between">
+          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
+            "Redujimos nuestra factura mensual de automatizaciones de más de \$2,800 a prácticamente \$45 alojando NodePulse en nuestro clúster Kubernetes. Poder escribir código JS cuando lo necesitamos sin restricciones nos ahorró meses de desarrollo."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-500 to-amber-400 flex items-center justify-center font-bold text-white text-xs">
+              MR
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-white">Marcos Rodríguez</h4>
+              <p class="text-[11px] text-slate-400">CTO en DataScale Labs</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-dark-card border border-dark-border flex flex-col justify-between">
+          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
+            "Para un banco digital regulado, enviar datos de clientes a través de SaaS externos era una pesadilla legal. Con NodePulse tenemos auditoría de ejecuciones completa, datos en nuestra VPC europea y cumplimiento GDPR absoluto."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-ai-violet to-indigo-500 flex items-center justify-center font-bold text-white text-xs">
+              EL
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-white">Elena Larrañaga</h4>
+              <p class="text-[11px] text-slate-400">Head of Security en FinPulse</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-dark-card border border-dark-border flex flex-col justify-between">
+          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
+            "La integración nativa de agentes de IA y modelos locales vía Ollama es simplemente brillante. Construimos un sistema de triaje de tickets y análisis de documentos en menos de una tarde."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-bold text-white text-xs">
+              DV
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-white">David Vega</h4>
+              <p class="text-[11px] text-slate-400">Lead AI Engineer en Solutio</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ SECTION (INTERACTIVE ACCORDION) -->
+  <section class="py-24 border-t border-dark-border">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-extrabold text-white tracking-tight">Preguntas Frecuentes</h2>
+        <p class="text-slate-400 text-sm mt-2">Todo lo que necesitas saber antes de empezar con NodePulse.</p>
+      </div>
+
+      <div class="space-y-4" id="faqAccordion">
+        
+        <div class="faq-item border border-dark-border bg-dark-card rounded-xl overflow-hidden">
+          <button class="faq-question w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white hover:text-brand-400 transition-colors">
+            <span>¿En qué se diferencia exactamente de n8n o Zapier?</span>
+            <svg class="faq-chevron w-4 h-4 text-slate-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-answer px-5 pb-5 text-xs text-slate-400 leading-relaxed hidden">
+            A diferencia de Zapier, NodePulse es fair-code / open-source, lo que significa que puedes autoalojarlo en tus servidores sin pagar por cada tarea individual. Frente a herramientas tradicionales, NodePulse incluye un soporte de primer nivel para Agentes de IA autónomos (RAG, memoria vectorial y llamadas a herramientas), interfaz de depuración en vivo de bajo nivel y ejecución de código Python/JavaScript de forma nativa.
+          </div>
+        </div>
+
+        <div class="faq-item border border-dark-border bg-dark-card rounded-xl overflow-hidden">
+          <button class="faq-question w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white hover:text-brand-400 transition-colors">
+            <span>¿Es realmente gratis en mi propio servidor?</span>
+            <svg class="faq-chevron w-4 h-4 text-slate-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-answer px-5 pb-5 text-xs text-slate-400 leading-relaxed hidden">
+            Sí, la versión Community es 100% gratuita bajo licencia Fair-Code. Puedes ejecutar flujos ilimitados, procesar millones de ejecuciones y conectar cualquier número de servicios sin límite de tiempo ni de escala artificial.
+          </div>
+        </div>
+
+        <div class="faq-item border border-dark-border bg-dark-card rounded-xl overflow-hidden">
+          <button class="faq-question w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white hover:text-brand-400 transition-colors">
+            <span>¿Puedo importar mis flujos existentes de n8n o Zapier?</span>
+            <svg class="faq-chevron w-4 h-4 text-slate-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-answer px-5 pb-5 text-xs text-slate-400 leading-relaxed hidden">
+            Sí. NodePulse cuenta con un importador nativo de archivos JSON de n8n, y una herramienta de migración asistida por IA para traducir tus Zaps o escenarios de Make en flujos compatibles con un solo clic.
+          </div>
+        </div>
+
+        <div class="faq-item border border-dark-border bg-dark-card rounded-xl overflow-hidden">
+          <button class="faq-question w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white hover:text-brand-400 transition-colors">
+            <span>¿Qué requerimientos mínimos de hardware necesito para Self-Hosting?</span>
+            <svg class="faq-chevron w-4 h-4 text-slate-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div class="faq-answer px-5 pb-5 text-xs text-slate-400 leading-relaxed hidden">
+            NodePulse es extremadamente eficiente. Puedes arrancarlo en una máquina virtual de tan solo 1 vCPU y 1 GB de RAM (como un droplet básico de DigitalOcean o una instancia EC2 t3.micro). Para cargas de producción de alto volumen, recomendamos 2 vCPU y 4 GB de RAM.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FINAL CTA / BOTTOM BANNER -->
+  <section id="get-started" class="py-20 border-t border-dark-border relative overflow-hidden">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="p-10 sm:p-14 rounded-3xl bg-gradient-to-b from-dark-card to-dark-surface border border-brand-500/40 text-center shadow-2xl relative overflow-hidden">
+        
+        <div class="ambient-glow -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-500/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+          Empieza a automatizar en menos de 60 segundos
+        </h2>
+        <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto mb-8">
+          Únete a miles de ingenieros que ya controlan sus flujos sin límites de licencia. Pruébalo en nuestra nube o ejecuta tu propio contenedor Docker hoy mismo.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#register" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brand-500 hover:bg-brand-400 text-white font-semibold text-sm shadow-xl shadow-brand-500/30 transition-all">
+            Crear Cuenta Cloud Gratis
+          </a>
+          <a href="https://github.com" target="_blank" rel="noreferrer" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-dark-surface border border-dark-border hover:border-slate-400 text-slate-200 font-semibold text-sm transition-all flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path></svg>
+            <span>Ver Repositorio GitHub</span>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-14 border-t border-dark-border bg-dark-bg text-slate-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+        
+        <!-- Brand column -->
+        <div class="col-span-2">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-8 h-8 rounded-lg bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 font-bold">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            </div>
+            <span class="text-base font-extrabold text-white">Node<span class="text-brand-400">Pulse</span></span>
+          </div>
+          <p class="text-xs text-slate-400 max-w-sm mb-4 leading-relaxed">
+            La plataforma líder de código abierto para automatización de procesos empresariales y orquestación de agentes de inteligencia artificial.
+          </p>
+          <div class="text-[11px] text-slate-500">
+            © 2026 NodePulse Inc. Licencia Fair-Code. Todos los derechos reservados.
+          </div>
+        </div>
+
+        <!-- Product links -->
+        <div>
+          <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-4">Producto</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#features" class="hover:text-white transition-colors">Características</a></li>
+            <li><a href="#integrations" class="hover:text-white transition-colors">Integraciones (450+)</a></li>
+            <li><a href="#demo" class="hover:text-white transition-colors">Simulador de Flujos</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Precios & Planes</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Changelog & Roadmap</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources links -->
+        <div>
+          <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-4">Desarrolladores</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#self-hosted" class="hover:text-white transition-colors">Documentación</a></li>
+            <li><a href="#self-hosted" class="hover:text-white transition-colors">Despliegue Docker</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">API Reference</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Crear Nodos Personalizados</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Seguridad y GDPR</a></li>
+          </ul>
+        </div>
+
+        <!-- Community links -->
+        <div>
+          <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-4">Comunidad</h4>
+          <ul class="space-y-2.5">
+            <li><a href="https://github.com" class="hover:text-white transition-colors">GitHub Repository</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Servidor Discord</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Foro de Discusión</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Plantillas de la Comunidad</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Blog de Ingeniería</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-dark-border flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-4">
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-slate-300">Términos de Servicio</a>
+          <a href="#" class="hover:text-slate-300">Privacidad</a>
+          <a href="#" class="hover:text-slate-300">Cookies</a>
+          <a href="#" class="hover:text-slate-300">Seguridad & Cumplimiento</a>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>Todos los sistemas operativos en Cloud</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+/* NodePulse Custom Stylesheet */
+
+/* Background canvas dot grid like n8n/visual editor */
+.bg-canvas-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Subtle page background grid */
+.grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Ambient lighting effect */
+.ambient-glow {
+  filter: blur(120px);
+  opacity: 0.8;
+  mix-blend-mode: screen;
+}
+
+/* Node styling & interactions */
+.workflow-node {
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.workflow-node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.7), 0 0 15px rgba(234, 74, 30, 0.15);
+}
+
+.workflow-node.executing {
+  border-color: #ea4a1e !important;
+  box-shadow: 0 0 25px rgba(234, 74, 30, 0.45);
+  animation: nodeExecuting 1.2s infinite alternate ease-in-out;
+}
+
+.workflow-node.completed {
+  border-color: #10B981 !important;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+}
+
+@keyframes nodeExecuting {
+  0% {
+    box-shadow: 0 0 15px rgba(234, 74, 30, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 35px rgba(234, 74, 30, 0.6);
+  }
+}
+
+/* SVG Connection Wire Animations */
+.flow-wire {
+  transition: stroke 0.3s ease;
+}
+
+.flow-wire-pulse {
+  stroke-dasharray: 12 12;
+  animation: flowWireDash 1.2s linear infinite;
+}
+
+@keyframes flowWireDash {
+  from {
+    stroke-dashoffset: 48;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Smooth custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090B0E;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222B36;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2E3947;
+}
+
+/* Integration cards hover effect */
+.integration-card {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.integration-card:hover {
+  transform: translateY(-3px);
+  border-color: #ff7754;
+  box-shadow: 0 10px 20px -5px rgba(234, 74, 30, 0.15);
+}
+
+/* Category tabs active state */
+.cat-tab.active {
+  background-color: #ea4a1e !important;
+  color: #ffffff !important;
+  border-color: #ea4a1e !important;
+}
+
+/* Deploy terminal active tab */
+.deploy-tab.active {
+  background-color: #222B36 !important;
+  color: #ffffff !important;
+}
