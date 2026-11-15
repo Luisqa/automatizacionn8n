@@ -1,6 +1,6 @@
-# NodePulse — Landing Page
+# Clarius — Landing Page
 
-Landing page moderna, interactiva y responsive para **NodePulse**, una plataforma de automatización de flujos de trabajo de código abierto y orquestación de agentes de IA (inspirada en n8n, Zapier y Make).
+Landing page moderna, interactiva y responsive para **Clarius**, una plataforma de automatización de flujos de trabajo de código abierto y orquestación de agentes de IA (inspirada en n8n, Zapier y Make).
 
 ---
 
@@ -25,7 +25,7 @@ Landing page moderna, interactiva y responsive para **NodePulse**, una plataform
    - Botón de copiado al portapapeles con confirmación visual interactiva.
 
 5. **Tabla Comparativa Detallada**:
-   - Comparación transparente de características clave: NodePulse vs. Zapier vs. Make.com vs. n8n (Privacidad de datos, soporte de Python/JS nativo, coste por ejecución y orquestación de IA).
+   - Comparación transparente de características clave: Clarius vs. Zapier vs. Make.com vs. n8n (Privacidad de datos, soporte de Python/JS nativo, coste por ejecución y orquestación de IA).
 
 6. **Calculadora y Selector de Precios**:
    - Selector entre ciclo de facturación mensual y anual con descuento del 20%.

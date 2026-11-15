@@ -1,5 +1,5 @@
 /**
- * NodePulse Interactive Landing Page Controller
+ * Clarius Interactive Landing Page Controller
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -74,7 +74,7 @@ const nodeDataMap = {
     time: '83ms',
     json: {
       channel: '#leads-vip',
-      bot_name: 'NodePulse LeadBot',
+      bot_name: 'Clarius LeadBot',
       blocks: [
         {
           type: 'header',
@@ -381,29 +381,29 @@ function initDeployTabs() {
 
   const snippets = {
     docker: `
-<p class="text-slate-500 mb-2"># Inicia NodePulse en segundo plano en el puerto 5678</p>
+<p class="text-slate-500 mb-2"># Inicia Clarius en segundo plano en el puerto 5678</p>
 <p class="text-brand-400">$ docker run -d \\</p>
-<p class="text-slate-300 pl-4">--name nodepulse \\</p>
+<p class="text-slate-300 pl-4">--name clarius \\</p>
 <p class="text-slate-300 pl-4">-p 5678:5678 \\</p>
-<p class="text-slate-300 pl-4">-v nodepulse_data:/home/node/.nodepulse \\</p>
+<p class="text-slate-300 pl-4">-v clarius_data:/home/node/.clarius \\</p>
 <p class="text-slate-300 pl-4">--restart unless-stopped \\</p>
-<p class="text-slate-300 pl-4">nodepulse/nodepulse:latest</p>
+<p class="text-slate-300 pl-4">clarius/clarius:latest</p>
 <p class="text-emerald-400 mt-4">✔ Contenedor iniciado en http://localhost:5678</p>
     `,
     compose: `
 <p class="text-slate-500 mb-2"># docker-compose.yml para producción con PostgreSQL y Redis</p>
-<p class="text-brand-400">$ curl -O https://get.nodepulse.io/docker-compose.yml</p>
+<p class="text-brand-400">$ curl -O https://get.clarius.io/docker-compose.yml</p>
 <p class="text-brand-400">$ docker compose up -d</p>
 <p class="text-slate-300 mt-2">[+] Running 3/3</p>
-<p class="text-slate-400 pl-2">✔ Network nodepulse_default    Created</p>
-<p class="text-slate-400 pl-2">✔ Container nodepulse-postgres  Started</p>
-<p class="text-slate-400 pl-2">✔ Container nodepulse-app       Started</p>
+<p class="text-slate-400 pl-2">✔ Network clarius_default    Created</p>
+<p class="text-slate-400 pl-2">✔ Container clarius-postgres  Started</p>
+<p class="text-slate-400 pl-2">✔ Container clarius-app       Started</p>
 <p class="text-emerald-400 mt-2">✔ Servicio listo con base de datos en alta disponibilidad</p>
     `,
     k8s: `
 <p class="text-slate-500 mb-2"># Despliegue con Helm Chart en tu clúster Kubernetes</p>
-<p class="text-brand-400">$ helm repo add nodepulse https://charts.nodepulse.io</p>
-<p class="text-brand-400">$ helm install my-nodepulse nodepulse/nodepulse \\</p>
+<p class="text-brand-400">$ helm repo add clarius https://charts.clarius.io</p>
+<p class="text-brand-400">$ helm install my-clarius clarius/clarius \\</p>
 <p class="text-slate-300 pl-4">--set workers.replicas=4 \\</p>
 <p class="text-slate-300 pl-4">--set ingress.enabled=true \\</p>
 <p class="text-slate-300 pl-4">--set ingress.hostname="workflows.tuempresa.com"</p>
@@ -411,8 +411,8 @@ function initDeployTabs() {
     `,
     npm: `
 <p class="text-slate-500 mb-2"># Instalación global vía npm en tu máquina local o servidor Node.js</p>
-<p class="text-brand-400">$ npm install -g nodepulse</p>
-<p class="text-brand-400">$ nodepulse start</p>
+<p class="text-brand-400">$ npm install -g clarius</p>
+<p class="text-brand-400">$ clarius start</p>
 <p class="text-slate-400 mt-2">Editor UI disponible en: http://localhost:5678</p>
 <p class="text-emerald-400">✔ Servidor escuchando en modo desarrollo local</p>
     `

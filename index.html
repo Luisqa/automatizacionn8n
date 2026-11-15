@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NodePulse | Plataforma de Automatización de Flujos y Agentes IA de Código Abierto</title>
+  <title>Clarius | Plataforma de Automatización de Flujos y Agentes IA de Código Abierto</title>
   <meta name="description" content="Automatiza flujos de trabajo complejos, conecta APIs, bases de datos y modelos de IA en tu propia infraestructura o en la nube. La alternativa de código abierto a Zapier y Make.">
   
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
@@ -20,17 +20,17 @@
         extend: {
           colors: {
             brand: {
-              50: '#fff5f2',
-              100: '#ffe8e1',
-              200: '#ffd0c3',
-              300: '#ffab97',
-              400: '#ff7754',
-              500: '#ea4a1e', // Vibrant n8n/zapier-like high-energy orange-coral
-              600: '#d7350d',
-              700: '#b42607',
-              800: '#92210a',
-              900: '#79200e',
-              950: '#420b03',
+              50: '#faf5ff',
+              100: '#f3e8ff',
+              200: '#e9d5ff',
+              300: '#d8b4fe',
+              400: '#c084fc',
+              500: '#8b5cf6', // Electric Violet
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+              950: '#2e1065',
             },
             dark: {
               bg: '#090B0E',
@@ -73,7 +73,7 @@
 
   <!-- Subtle Ambient Glow Backgrounds -->
   <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-    <div class="ambient-glow -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-brand-500/15 rounded-full blur-[140px]"></div>
+    <div class="ambient-glow -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-brand-500/25 rounded-full blur-[140px]"></div>
     <div class="ambient-glow top-[35%] -left-48 w-[600px] h-[600px] bg-ai-violet/10 rounded-full blur-[160px]"></div>
     <div class="ambient-glow top-[65%] -right-48 w-[650px] h-[650px] bg-ai-cyan/10 rounded-full blur-[160px]"></div>
     <div class="grid-pattern absolute inset-0 opacity-40"></div>
@@ -85,7 +85,7 @@
       
       <!-- Logo -->
       <a href="#" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 via-brand-600 to-ai-violet p-[1px] shadow-lg shadow-brand-500/20 group-hover:shadow-brand-500/40 transition-all duration-300">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 via-brand-600 to-fuchsia-600 p-[1px] shadow-lg shadow-brand-500/20 group-hover:shadow-brand-500/40 transition-all duration-300">
           <div class="w-full h-full bg-dark-surface rounded-[11px] flex items-center justify-center">
             <svg class="w-5 h-5 text-brand-400 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="18" cy="5" r="3"></circle>
@@ -98,7 +98,7 @@
         </div>
         <div class="flex flex-col">
           <div class="flex items-center gap-2">
-            <span class="text-xl font-extrabold tracking-tight text-white">Node<span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-500">Pulse</span></span>
+            <span class="text-xl font-extrabold tracking-tight text-white">Clari<span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-fuchsia-400">us</span></span>
             <span class="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20">v2.5</span>
           </div>
           <span class="text-[11px] text-slate-400 font-medium -mt-1">Orquestación & IA</span>
@@ -179,7 +179,7 @@
       <div class="text-center max-w-4xl mx-auto">
         <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-6">
           Automatización sin límites.
-          <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-500 to-amber-300">
+          <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-violet-300 via-brand-400 to-fuchsia-300">
             Libre, visual y potenciada por IA.
           </span>
         </h1>
@@ -198,7 +198,7 @@
           <!-- Docker 1-click Quick Launch Copy -->
           <div class="w-full sm:w-auto flex items-center bg-dark-card border border-dark-border hover:border-dark-borderLight rounded-xl px-4 py-3 shadow-inner group">
             <span class="text-xs font-mono text-slate-500 mr-2">$</span>
-            <code id="dockerCommand" class="text-xs sm:text-sm font-mono text-slate-300 select-all">docker run -p 5678:5678 nodepulse/nodepulse</code>
+            <code id="dockerCommand" class="text-xs sm:text-sm font-mono text-slate-300 select-all">docker run -p 5678:5678 clarius/clarius</code>
             <button id="copyDockerBtn" title="Copiar comando Docker" class="ml-3 p-1.5 rounded-lg bg-dark-surface hover:bg-slate-800 text-slate-400 hover:text-white transition-all">
               <svg id="copyIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
               <svg id="copiedIcon" class="w-4 h-4 text-emerald-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
@@ -245,7 +245,7 @@
                 <div class="h-4 w-[1px] bg-dark-border mx-1"></div>
                 <span class="text-xs font-mono text-slate-300 font-medium flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                  flujo_atencion_ia_leads.pulse
+                  flujo_atencion_ia_leads.clarius
                 </span>
                 <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Activo</span>
               </div>
@@ -275,7 +275,7 @@
               <svg id="connectionSvg" class="absolute inset-0 w-full h-full pointer-events-none z-10" xmlns="http://www.w3.org/2000/svg">
                 <!-- Path 1: Trigger -> AI Agent -->
                 <path id="wire-1" d="" class="flow-wire" stroke="#334155" stroke-width="2.5" fill="none" stroke-dasharray="6 6"/>
-                <path id="wire-1-pulse" d="" class="flow-wire-pulse" stroke="#ea4a1e" stroke-width="3" fill="none" opacity="0"/>
+                <path id="wire-1-pulse" d="" class="flow-wire-pulse" stroke="#8b5cf6" stroke-width="3" fill="none" opacity="0"/>
                 
                 <!-- Path 2: AI Agent -> Router (Condition) -->
                 <path id="wire-2" d="" class="flow-wire" stroke="#334155" stroke-width="2.5" fill="none" stroke-dasharray="6 6"/>
@@ -458,7 +458,7 @@
     </div>
   </section>
 
-  <!-- FEATURES SECTION: WHY NODEPULSE -->
+  <!-- FEATURES SECTION: WHY CLARIUS -->
   <section id="features" class="py-24 relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
@@ -516,7 +516,7 @@
           </div>
           <h3 class="text-xl font-bold text-white mb-3">Privacidad y Cumplimiento GDPR</h3>
           <p class="text-sm text-slate-400 leading-relaxed mb-6">
-            Tus datos nunca viajan por servidores desconocidos si no quieres. Aloja NodePulse en tu VPC, Kubernetes o servidor físico con cifrado en reposo.
+            Tus datos nunca viajan por servidores desconocidos si no quieres. Aloja Clarius en tu VPC, Kubernetes o servidor físico con cifrado en reposo.
           </p>
           <ul class="space-y-2 text-xs text-slate-300">
             <li class="flex items-center gap-2"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Cero retención forzada de datos</li>
@@ -577,13 +577,13 @@
     </div>
   </section>
 
-  <!-- COMPARISON TABLE: NODEPULSE VS OTHERS -->
+  <!-- COMPARISON TABLE: CLARIUS VS OTHERS -->
   <section class="py-24 border-t border-dark-border relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="text-center max-w-3xl mx-auto mb-16">
         <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          ¿Cómo se compara NodePulse?
+          ¿Cómo se compara Clarius?
         </h2>
         <p class="text-slate-400 text-sm sm:text-base mt-3">
           Compara la libertad técnica, el coste y la soberanía de datos frente a alternativas cerradas y heredadas.
@@ -595,7 +595,7 @@
           <thead>
             <tr class="border-b border-dark-border bg-dark-card/60">
               <th class="p-4 sm:p-5 font-bold text-slate-300">Capacidad</th>
-              <th class="p-4 sm:p-5 font-extrabold text-brand-400 bg-brand-500/10 border-x border-brand-500/20 text-center">NodePulse</th>
+              <th class="p-4 sm:p-5 font-extrabold text-brand-400 bg-brand-500/10 border-x border-brand-500/20 text-center">Clarius</th>
               <th class="p-4 sm:p-5 font-semibold text-slate-400 text-center">Zapier</th>
               <th class="p-4 sm:p-5 font-semibold text-slate-400 text-center">Make.com</th>
               <th class="p-4 sm:p-5 font-semibold text-slate-400 text-center">n8n</th>
@@ -665,7 +665,7 @@
             Despliega en minutos en tu infraestructura preferida
           </h2>
           <p class="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">
-            NodePulse es ligero, modular y está listo para producción. Ejecútalo como un solo contenedor Docker en un VPS de \$5/mes o escala horizontalmente con Kubernetes y colas Redis.
+            Clarius es ligero, modular y está listo para producción. Ejecútalo como un solo contenedor Docker en un VPS de \$5/mes o escala horizontalmente con Kubernetes y colas Redis.
           </p>
 
           <div class="space-y-4 text-xs sm:text-sm text-slate-300">
@@ -702,7 +702,7 @@
                 <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
                 <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
                 <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
-                <span class="text-xs font-mono text-slate-400 ml-2">terminal — nodepulse deploy</span>
+                <span class="text-xs font-mono text-slate-400 ml-2">terminal — clarius deploy</span>
               </div>
               <div class="flex items-center gap-1">
                 <button class="deploy-tab active text-[11px] font-mono px-2.5 py-1 rounded bg-dark-border text-white" data-tab="docker">Docker</button>
@@ -716,13 +716,13 @@
             <div class="p-5 font-mono text-xs text-slate-300 bg-dark-bg min-h-[220px]">
               <div id="cliOutput">
                 <!-- Content swapped by app.js -->
-                <p class="text-slate-500 mb-2"># Inicia NodePulse en segundo plano en el puerto 5678</p>
+                <p class="text-slate-500 mb-2"># Inicia Clarius en segundo plano en el puerto 5678</p>
                 <p class="text-brand-400">$ docker run -d \</p>
-                <p class="text-slate-300 pl-4">--name nodepulse \</p>
+                <p class="text-slate-300 pl-4">--name clarius \</p>
                 <p class="text-slate-300 pl-4">-p 5678:5678 \</p>
-                <p class="text-slate-300 pl-4">-v nodepulse_data:/home/node/.nodepulse \</p>
+                <p class="text-slate-300 pl-4">-v clarius_data:/home/node/.clarius \</p>
                 <p class="text-slate-300 pl-4">--restart unless-stopped \</p>
-                <p class="text-slate-300 pl-4">nodepulse/nodepulse:latest</p>
+                <p class="text-slate-300 pl-4">clarius/clarius:latest</p>
                 <p class="text-emerald-400 mt-4">✔ Contenedor iniciado en http://localhost:5678</p>
               </div>
             </div>
@@ -754,7 +754,7 @@
           Comienza gratis. Escala sin sorpresas en tu factura.
         </h2>
         <p class="text-slate-400 text-sm sm:text-base">
-          A diferencia de otras herramientas que te cobran por cada minúsculo paso de ejecución, con NodePulse tienes libertad total.
+          A diferencia de otras herramientas que te cobran por cada minúsculo paso de ejecución, con Clarius tienes libertad total.
         </p>
 
         <!-- Billing Cycle Toggle -->
@@ -872,7 +872,7 @@
         
         <div class="p-6 rounded-2xl bg-dark-card border border-dark-border flex flex-col justify-between">
           <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
-            "Redujimos nuestra factura mensual de automatizaciones de más de \$2,800 a prácticamente \$45 alojando NodePulse en nuestro clúster Kubernetes. Poder escribir código JS cuando lo necesitamos sin restricciones nos ahorró meses de desarrollo."
+            "Redujimos nuestra factura mensual de automatizaciones de más de \$2,800 a prácticamente \$45 alojando Clarius en nuestro clúster Kubernetes. Poder escribir código JS cuando lo necesitamos sin restricciones nos ahorró meses de desarrollo."
           </p>
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-500 to-amber-400 flex items-center justify-center font-bold text-white text-xs">
@@ -887,7 +887,7 @@
 
         <div class="p-6 rounded-2xl bg-dark-card border border-dark-border flex flex-col justify-between">
           <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
-            "Para un banco digital regulado, enviar datos de clientes a través de SaaS externos era una pesadilla legal. Con NodePulse tenemos auditoría de ejecuciones completa, datos en nuestra VPC europea y cumplimiento GDPR absoluto."
+            "Para un banco digital regulado, enviar datos de clientes a través de SaaS externos era una pesadilla legal. Con Clarius tenemos auditoría de ejecuciones completa, datos en nuestra VPC europea y cumplimiento GDPR absoluto."
           </p>
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-ai-violet to-indigo-500 flex items-center justify-center font-bold text-white text-xs">
@@ -926,7 +926,7 @@
       
       <div class="text-center mb-16">
         <h2 class="text-3xl font-extrabold text-white tracking-tight">Preguntas Frecuentes</h2>
-        <p class="text-slate-400 text-sm mt-2">Todo lo que necesitas saber antes de empezar con NodePulse.</p>
+        <p class="text-slate-400 text-sm mt-2">Todo lo que necesitas saber antes de empezar con Clarius.</p>
       </div>
 
       <div class="space-y-4" id="faqAccordion">
@@ -937,7 +937,7 @@
             <svg class="faq-chevron w-4 h-4 text-slate-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
           <div class="faq-answer px-5 pb-5 text-xs text-slate-400 leading-relaxed hidden">
-            A diferencia de Zapier, NodePulse es fair-code / open-source, lo que significa que puedes autoalojarlo en tus servidores sin pagar por cada tarea individual. Frente a herramientas tradicionales, NodePulse incluye un soporte de primer nivel para Agentes de IA autónomos (RAG, memoria vectorial y llamadas a herramientas), interfaz de depuración en vivo de bajo nivel y ejecución de código Python/JavaScript de forma nativa.
+            A diferencia de Zapier, Clarius es fair-code / open-source, lo que significa que puedes autoalojarlo en tus servidores sin pagar por cada tarea individual. Frente a herramientas tradicionales, Clarius incluye un soporte de primer nivel para Agentes de IA autónomos (RAG, memoria vectorial y llamadas a herramientas), interfaz de depuración en vivo de bajo nivel y ejecución de código Python/JavaScript de forma nativa.
           </div>
         </div>
 
@@ -957,7 +957,7 @@
             <svg class="faq-chevron w-4 h-4 text-slate-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
           <div class="faq-answer px-5 pb-5 text-xs text-slate-400 leading-relaxed hidden">
-            Sí. NodePulse cuenta con un importador nativo de archivos JSON de n8n, y una herramienta de migración asistida por IA para traducir tus Zaps o escenarios de Make en flujos compatibles con un solo clic.
+            Sí. Clarius cuenta con un importador nativo de archivos JSON de n8n, y una herramienta de migración asistida por IA para traducir tus Zaps o escenarios de Make en flujos compatibles con un solo clic.
           </div>
         </div>
 
@@ -967,7 +967,7 @@
             <svg class="faq-chevron w-4 h-4 text-slate-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
           <div class="faq-answer px-5 pb-5 text-xs text-slate-400 leading-relaxed hidden">
-            NodePulse es extremadamente eficiente. Puedes arrancarlo en una máquina virtual de tan solo 1 vCPU y 1 GB de RAM (como un droplet básico de DigitalOcean o una instancia EC2 t3.micro). Para cargas de producción de alto volumen, recomendamos 2 vCPU y 4 GB de RAM.
+            Clarius es extremadamente eficiente. Puedes arrancarlo en una máquina virtual de tan solo 1 vCPU y 1 GB de RAM (como un droplet básico de DigitalOcean o una instancia EC2 t3.micro). Para cargas de producción de alto volumen, recomendamos 2 vCPU y 4 GB de RAM.
           </div>
         </div>
 
@@ -1018,13 +1018,13 @@
             <div class="w-8 h-8 rounded-lg bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 font-bold">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
             </div>
-            <span class="text-base font-extrabold text-white">Node<span class="text-brand-400">Pulse</span></span>
+            <span class="text-base font-extrabold text-white">Clari<span class="text-brand-400">us</span></span>
           </div>
           <p class="text-xs text-slate-400 max-w-sm mb-4 leading-relaxed">
             La plataforma líder de código abierto para automatización de procesos empresariales y orquestación de agentes de inteligencia artificial.
           </p>
           <div class="text-[11px] text-slate-500">
-            © 2026 NodePulse Inc. Licencia Fair-Code. Todos los derechos reservados.
+            © 2026 Clarius Inc. Licencia Fair-Code. Todos los derechos reservados.
           </div>
         </div>
 
